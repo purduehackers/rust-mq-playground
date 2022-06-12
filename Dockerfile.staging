@@ -1,0 +1,18 @@
+FROM hexpm/elixir:1.13.3-erlang-24.3.4-debian-buster-20210902-slim
+
+RUN apt update
+RUN apt install -y curl
+RUN apt install -y gcc
+
+RUN curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable --profile minimal -y
+RUN cp ~/.cargo/bin/rustup /usr/bin
+RUN cp ~/.cargo/bin/cargo /usr/bin
+RUN rustup target add wasm32-unknown-unknown
+
+COPY . src
+WORKDIR src
+
+RUN mix local.rebar --force
+RUN mix local.hex --force
+RUN mix deps.get --only prod
+RUN MIX_ENV=prod mix release
