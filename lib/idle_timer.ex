@@ -1,6 +1,15 @@
 defmodule IdleTimer do
   use Agent
 
+  """
+  The IdleTimer keeps track of how long it's been since the last request.
+  It's used to shut the process off after a set time, specified by the argument
+  passed in by server_app.ex
+
+  Shutting the process down is useful because Fly machines scale to zero, so
+  I can keep hosting costs down even with a reasonably powerful server
+  """
+
   def start_link(timeout) do
     Agent.start_link(fn -> %{base: timeout, remaining: timeout} end, name: __MODULE__)
     Task.start_link(fn -> decrement_loop() end)
@@ -29,6 +38,8 @@ defmodule IdleTimer do
     end
   end
 
+  # Used to prevent the server from shutting down
+  # while compiling a program
   def wait_for_process(pid) do
     if Process.alive?(pid) do
       IdleTimer.reset_timer()

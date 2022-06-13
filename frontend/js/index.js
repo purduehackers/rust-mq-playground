@@ -1,22 +1,3 @@
-let code = `
-use macroquad::prelude::*;
-
-#[macroquad::main("BasicShapes")]
-async fn main() {
-    loop {
-        clear_background(RED);
-
-        draw_line(40.0, 40.0, 100.0, 200.0, 15.0, BLUE);
-        draw_rectangle(screen_width() / 2.0 - 60.0, 100.0, 120.0, 60.0, GREEN);
-        draw_circle(screen_width() - 30.0, screen_height() - 30.0, 15.0, YELLOW);
-
-        draw_text("IT WORKS!", 20.0, 20.0, 30.0, DARKGRAY);
-
-        next_frame().await
-    }
-}
-`;
-
 function load(url, params) {
     var a = fetch(url, params);
     register_plugins(plugins),
@@ -27,6 +8,7 @@ function load(url, params) {
             version != b && console.error('Version mismatch: gl.js version is: ' + version + ', rust sapp-wasm crate version is: ' + b),
                 init_plugins(plugins),
                 a.exports.main()
+            document.querySelector("#compile-btn").innerHTML = "Compile";
         }).catch(a=>{
             console.error('WASM failed to load, probably incompatible gl.js version'),
                 console.error(a)
@@ -51,10 +33,11 @@ function load(url, params) {
 }
 
 let editor = ace.edit("editor")
-// editor.setTheme("ace/theme/monokai");
-// editor.session.setMode("ace/mode/rust");
+editor.session.setMode("ace/mode/rust");
 
 function compile_and_load() {
+    document.querySelector("#compile-btn").innerHTML = "Compiling...";
+
     let params = {
         body: JSON.stringify({ code: editor.getValue() }),
         method: "POST"
