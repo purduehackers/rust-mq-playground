@@ -28,4 +28,12 @@ defmodule IdleTimer do
       System.stop(0)
     end
   end
+
+  def wait_for_process(pid) do
+    if Process.alive?(pid) do
+      IdleTimer.reset_timer()
+      Process.sleep(1000)
+      wait_for_process(pid)
+    end
+  end
 end

@@ -35,9 +35,9 @@ curl -i -X POST \
       }
     ],
     "guest": {
-        "cpu_kind": "shared",
-        "cpus": 1,
-        "memory_mb": 1024
+        "cpu_kind": "dedicated",
+        "cpus": 2,
+        "memory_mb": 4096
     }
   }
 }'

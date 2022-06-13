@@ -35,15 +35,7 @@ defmodule Router do
       System.cmd("cargo", ["build", "--target", "wasm32-unknown-unknown"], cd: build_path)
     end)
 
-    loop = fn loop ->
-      if Process.alive?(task) do
-        IdleTimer.reset_timer()
-        Process.sleep(1000)
-        loop.(loop)
-      end
-    end
-
-    loop.(loop)
+    IdleTimer.wait_for_process(task)
 
     conn
     |> Plug.Conn.put_resp_content_type("application/wasm", "")
@@ -57,21 +49,5 @@ defmodule Router do
 
   match _ do
     send_resp(conn, 404, "404")
-  end
-end
-
-defmodule VisitCounter do
-  use Agent
-
-  def start_link(_opts) do
-    Agent.start_link(fn -> 0 end, name: __MODULE__)
-  end
-
-  def get() do
-    Agent.get(__MODULE__, & &1)
-  end
-
-  def increment() do
-    Agent.update(__MODULE__, & &1 + 1)
   end
 end
