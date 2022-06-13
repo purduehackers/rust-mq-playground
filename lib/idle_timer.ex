@@ -37,3 +37,12 @@ defmodule IdleTimer do
     end
   end
 end
+
+defmodule IdleTimerPlug do
+  def init(options), do: options
+
+  def call(conn, _opts) do
+    IdleTimer.reset_timer()
+    conn
+  end
+end
