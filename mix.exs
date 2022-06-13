@@ -25,6 +25,7 @@ defmodule RustMqApi.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
+      {:uuid,"~> 1.1"},
     ]
   end
 end

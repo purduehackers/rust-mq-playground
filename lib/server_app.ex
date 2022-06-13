@@ -8,7 +8,11 @@ defmodule ServerApp do
         plug: Router, 
         options: [port: 4000]
       ),
+      {VisitCounter, nil},
+      {IdleTimer, 45},
     ]
+    
+    System.cmd("cargo", ["build", "--target", "wasm32-unknown-unknown"], cd: "template")
 
     opts = [strategy: :one_for_one, name: ServerApp.Supervisor]                         
     IO.puts("Starting Server at http://localhost:4000...")                                                         

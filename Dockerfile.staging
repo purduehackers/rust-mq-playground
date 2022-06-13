@@ -9,10 +9,15 @@ RUN cp ~/.cargo/bin/rustup /usr/bin
 RUN cp ~/.cargo/bin/cargo /usr/bin
 RUN rustup target add wasm32-unknown-unknown
 
-COPY . src
-WORKDIR src
+COPY . /src
+WORKDIR /src
 
 RUN mix local.rebar --force
 RUN mix local.hex --force
 RUN mix deps.get --only prod
 RUN MIX_ENV=prod mix release
+
+WORKDIR /src/template
+RUN cargo fetch
+RUN cargo build --target wasm32-unknown-unknown
+WORKDIR /src

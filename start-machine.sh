@@ -33,6 +33,11 @@ curl -i -X POST \
         "protocol": "tcp",
         "internal_port": 4000
       }
-    ]
+    ],
+    "guest": {
+        "cpu_kind": "shared",
+        "cpus": 1,
+        "memory_mb": 1024
+    }
   }
 }'

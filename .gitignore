@@ -24,3 +24,5 @@ rust_mq_api-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+template/target
