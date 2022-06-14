@@ -16,6 +16,42 @@
             background: black;
             z-index: 0;
         }
+
+        button {
+            border: none;
+            padding: 4px;
+            margin: 0;
+            font-weight: bold;
+            transition: all 0.125s ease 0s;
+        }
+
+        .compile-btn {
+            background: rgb(245, 158, 11);
+            color: black;
+            width: 15ch;
+        }
+
+        .download-btn {
+            background: rgb(31, 41, 55);
+            color: white;
+            width: 16ch;
+            margin-left: -4px;
+        }
+
+        .compile-btn:hover, .download-btn:hover {
+            background: black;
+            color: rgb(245, 158, 11);
+        }
+
+        .error-btn {
+            background: red;
+            color: white;
+            width: 16ch;
+        }
+
+        .error-btn:hover {
+            background: #8B0000;
+        }
     </style>
     <script src="https://pagecdn.io/lib/ace/1.4.14/ace.min.js"></script>
     <script src="https://pagecdn.io/lib/ace/1.4.14/mode-rust.min.js"></script>
@@ -27,34 +63,19 @@
     <!-- Minified and statically hosted version of https://github.com/not-fl3/macroquad/blob/master/js/mq_js_bundle.js -->
     <div class="columns" style="height: 100vh; margin: 0">
         <div class="column" style="padding: 0; background: white; width: 120ch">
-            <div>
+            <div style="height: 4vh">
                 <button 
-                    id="compile-btn" onclick="compile_and_load()"
-                    style="background: rgb(245 158 11); 
-                           color: black;
-                           border: none;
-                           padding: 4px;
-                           width: 15ch;
-                           margin: 0;
-                           font-weight: bold"
+                    id="compile-btn" onclick="compile_and_load()" class="compile-btn"
                 >
                 Compile
                 </button>
                 <button 
-                    id="download-btn" onclick="downloadProject()"
-                    style="background: rgb(31 41 55); 
-                           color: white;
-                           border: none;
-                           padding: 4px;
-                           width: 16ch;
-                           margin: 0;
-                           margin-left: -4px;
-                           font-weight: bold"
+                    id="download-btn" onclick="downloadProject()" class="download-btn"
                 >
                 Download
                 </button>
             </div>
-            <div id="editor" style="height: 97.5%">use macroquad::prelude::*;
+            <div id="editor" style="height: 92vh">use macroquad::prelude::*;
 
 struct MainState {
     ball: Rect,
@@ -110,6 +131,18 @@ async fn main() {
         next_frame().await
     }
 }
+            </div>
+            <button id="error-btn" class="error-btn"
+                style="height: 4vh;" onclick="toggle_error_msg()">Show Error Panel</button>
+            <div id="error-msg">
+                <br>
+                <div style="padding-left: 1em; height: 90%; overflow-y: scroll;">
+                    <code id="error-body" 
+                        style="white-space: pre-wrap; background: white;"
+                    >
+                    No errors
+                    </code>
+                </div>
             </div>
         </div>
         <div class="column" style="padding: 0">
