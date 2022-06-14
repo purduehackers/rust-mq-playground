@@ -53,18 +53,28 @@ defmodule Router do
     File.write!("#{build_path}/src/main.rs", code)
 
     # Run cargo and wait for it to finish
+    parent = self()
     {:ok, task} = Task.start(fn ->
-      System.cmd(command, args, cd: build_path)
+      case System.cmd(command, args, cd: build_path, stderr_to_stdout: true, parallelism: true) do
+        {_, 0} -> send(parent, :success)
+        {err, _} -> send(parent, err)
+      end
     end)
     IdleTimer.wait_for_process(task)
 
     # Send wasm to client and delete the build directory
-    conn = conn
-           |> put_resp_header("content-type", mime)
-           |> send_file(200, "builds/#{uuid}/#{file}")
+    conn = receive do
+      :success -> 
+        conn 
+        |> put_resp_header("content-type", mime)
+        |> send_file(200, "builds/#{uuid}/#{file}")
+
+      err ->
+        conn
+        |> send_resp(200, %{error: err} |> Jason.encode!())
+    end
 
     File.rm_rf!("builds/#{uuid}")
-
     conn
   end
 end

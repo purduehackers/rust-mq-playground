@@ -7,7 +7,7 @@ curl -i -X POST \
 -H "Authorization: Bearer ${FLY_API_TOKEN}" -H "Content-Type: application/json" \
 "http://${FLY_API_HOSTNAME}/v1/apps/rust-mq/machines" \
 -d '{
-  "name": "compiler-2-quad",
+  "name": "compiler-1-octa",
   "config": {
     "image": "mkhan45/test-runner:latest",
     "env": {
@@ -36,7 +36,7 @@ curl -i -X POST \
     ],
     "guest": {
         "cpu_kind": "shared",
-        "cpus": 4,
+        "cpus": 8,
         "memory_mb": 4096
     }
   }

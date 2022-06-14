@@ -1,5 +1,6 @@
-function load(url, params) {
-    var a = fetch(url, params);
+function load(stream) {
+    var a = stream;
+
     register_plugins(plugins),
         typeof WebAssembly.compileStreaming == 'function' ? WebAssembly.compileStreaming(a).then(a=>(add_missing_functions_stabs(a), WebAssembly.instantiate(a, importObject))).then(a=>{
             wasm_memory = a.exports.memory,
@@ -8,7 +9,6 @@ function load(url, params) {
             version != b && console.error('Version mismatch: gl.js version is: ' + version + ', rust sapp-wasm crate version is: ' + b),
                 init_plugins(plugins),
                 a.exports.main()
-            document.querySelector("#compile-btn").innerHTML = "Compile";
         }).catch(a=>{
             console.error('WASM failed to load, probably incompatible gl.js version'),
                 console.error(a)
@@ -43,7 +43,22 @@ function compile_and_load() {
         method: "POST"
     };
 
-    load("/compile", params)
+    fetch("/compile", params)
+    .then(resp => {
+        let cloned = resp.clone();
+
+        resp.text().then(text => {
+            if (isJSON(text)) {
+                // compliation error'd
+                let json = JSON.parse(text);
+                let error_msg = json["error"];
+                alert(error_msg);
+            } else {
+                load(cloned);
+            }
+            document.querySelector("#compile-btn").innerHTML = "Compile";
+        });
+    })
 }
 
 function downloadProject() {
@@ -66,4 +81,13 @@ function downloadProject() {
         document.body.removeChild(a);
         document.querySelector("#download-btn").innerHTML = "Download";
     });
+}
+
+function isJSON(str) {
+    try {
+        let parsed = JSON.parse(str);
+        return typeof parsed === "object";
+    } catch (e) {
+        return false;
+    }
 }
