@@ -45,3 +45,25 @@ function compile_and_load() {
 
     load("/compile", params)
 }
+
+function downloadProject() {
+    let params = {
+        body: JSON.stringify({ code: editor.getValue() }),
+        method: "POST"
+    };
+
+
+    document.querySelector("#download-btn").innerHTML = "Compressing...";
+    fetch("/download", params)
+    .then(resp => resp.blob())
+    .then(blob => {
+        let a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "rust-mq-project.zip";
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        document.querySelector("#download-btn").innerHTML = "Download";
+    });
+}

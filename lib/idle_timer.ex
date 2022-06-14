@@ -1,7 +1,7 @@
 defmodule IdleTimer do
   use Agent
 
-  """
+  @moduledoc """
   The IdleTimer keeps track of how long it's been since the last request.
   It's used to shut the process off after a set time, specified by the argument
   passed in by server_app.ex

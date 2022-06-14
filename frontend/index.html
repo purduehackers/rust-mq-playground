@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>TITLE</title>
+    <title>Rust Macroquad Playground</title>
     <style>
         html,
         body,
@@ -28,7 +28,31 @@
     <div class="columns" style="height: 100vh; margin: 0">
         <div class="column" style="padding: 0; background: white; width: 120ch">
             <div>
-                <button id="compile-btn" onclick="compile_and_load()">Compile</button>
+                <button 
+                    id="compile-btn" onclick="compile_and_load()"
+                    style="background: rgb(245 158 11); 
+                           color: black;
+                           border: none;
+                           padding: 4px;
+                           width: 15ch;
+                           margin: 0;
+                           font-weight: bold"
+                >
+                Compile
+                </button>
+                <button 
+                    id="download-btn" onclick="downloadProject()"
+                    style="background: rgb(31 41 55); 
+                           color: white;
+                           border: none;
+                           padding: 4px;
+                           width: 16ch;
+                           margin: 0;
+                           margin-left: -4px;
+                           font-weight: bold"
+                >
+                Download
+                </button>
             </div>
             <div id="editor" style="height: 97.5%">use macroquad::prelude::*;
 
