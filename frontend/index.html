@@ -134,15 +134,12 @@ async fn main() {
             </div>
             <button id="error-btn" class="error-btn"
                 style="height: 4vh;" onclick="toggle_error_msg()">Show Error Panel</button>
-            <div id="error-msg">
-                <br>
-                <div style="padding-left: 1em; height: 90%; overflow-y: scroll;">
-                    <code id="error-body" 
-                        style="white-space: pre-wrap; background: white;"
-                    >
+            <div id="error-msg" style="margin: 0; padding: 0; overflow-y: scroll; height: 40vh;">
+                <pre id="error-body" 
+                     style="display: inline-block; margin: 0; white-space: pre-wrap; background: white;"
+                     >
                     No errors
-                    </code>
-                </div>
+                </pre>
             </div>
         </div>
         <div class="column" style="padding: 0">
