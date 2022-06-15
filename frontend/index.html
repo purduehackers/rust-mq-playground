@@ -52,6 +52,18 @@
         .error-btn:hover {
             background: #8B0000;
         }
+
+        .error-msg-container {
+            margin: 0; 
+            padding: 0;
+            overflow-y: scroll;
+            transition: all 0.125s linear;
+            height: 0vh;
+        }
+
+        .error-msg-container-shown {
+            height: 40vh;
+        }
     </style>
     <script src="https://pagecdn.io/lib/ace/1.4.14/ace.min.js"></script>
     <script src="https://pagecdn.io/lib/ace/1.4.14/mode-rust.min.js"></script>
@@ -75,7 +87,8 @@
                 Download
                 </button>
             </div>
-            <div id="editor" style="height: 92vh">use macroquad::prelude::*;
+            <div id="editor-container" style="height: 92vh">
+            <div id="editor" style="height: 100%">use macroquad::prelude::*;
 
 struct MainState {
     ball: Rect,
@@ -132,14 +145,15 @@ async fn main() {
     }
 }
             </div>
+            </div>
             <button id="error-btn" class="error-btn"
                 style="height: 4vh;" onclick="toggle_error_msg()">Show Error Panel</button>
-            <div id="error-msg" style="margin: 0; padding: 0; overflow-y: scroll; height: 40vh;">
-                <pre id="error-body" 
+            <div id="error-msg" class="error-msg-container">
+                <code id="error-body" 
                      style="display: inline-block; margin: 0; white-space: pre-wrap; background: white;"
                      >
                     No errors
-                </pre>
+                </code>
             </div>
         </div>
         <div class="column" style="padding: 0">

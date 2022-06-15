@@ -3,19 +3,18 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 } else {
     let error_msg_div = document.querySelector("#error-msg");
     let error_body_el = document.querySelector("#error-body");
-    error_msg_div.style.display = "none";
 
     function toggle_error_msg() {
-        if (error_msg_div.style.display === "none") {
-            // currently hidden, unhide
-            error_msg_div.style.display = "block";
-            document.querySelector("#editor").style.height = "50%";
+        error_msg_div.classList.toggle("error-msg-container-shown");
+
+        if (error_msg_div.classList.contains("error-msg-container-shown")) {
+            document.querySelector("#editor-container").style.height = "50vh";
             document.querySelector("#error-btn").innerHTML = "Hide Error Panel";
         } else {
-            error_msg_div.style.display = "none";
-            document.querySelector("#editor").style.height = "90.5%";
             document.querySelector("#error-btn").innerHTML = "Show Error Panel";
+            document.querySelector("#editor-container").style.height = "92vh";
         }
+        editor.resize();
     }
 
     function load(stream) {
