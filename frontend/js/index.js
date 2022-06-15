@@ -13,8 +13,11 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
         } else {
             document.querySelector("#error-btn").innerHTML = "Show Error Panel";
             document.querySelector("#editor-container").style.height = "92vh";
+            for (let i = 1; i <= 10; i += 1)
+                setTimeout(_ => editor.resize(), i * 10);
         }
-        editor.resize();
+
+        setTimeout(_ => editor.resize(), 110);
     }
 
     function load(stream) {
