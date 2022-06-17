@@ -9,7 +9,7 @@ defmodule Router do
     send_cmd_artifact(
       conn,
       command: "cargo",
-      args: ["build", "--target", "wasm32-unknown-unknown"],
+      args: ["build", "--target", "wasm32-unknown-unknown", "--release"],
       file: "target/wasm32-unknown-unknown/debug/template.wasm",
       mime: "application/wasm"
     )

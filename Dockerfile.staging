@@ -20,5 +20,5 @@ RUN MIX_ENV=prod mix release
 
 WORKDIR /src/template
 RUN cargo fetch
-RUN cargo build --target wasm32-unknown-unknown
+RUN cargo build --target wasm32-unknown-unknown --release
 WORKDIR /src
