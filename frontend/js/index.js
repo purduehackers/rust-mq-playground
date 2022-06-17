@@ -75,7 +75,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
                         let json = JSON.parse(text);
                         let error_msg = json["error"];
                         error_body_el.innerHTML = error_msg.trim();
-                        if (error_msg_div.style.display === "none")
+                        if (!error_msg_div.classList.contains("error-msg-container-shown"))
                             toggle_error_msg();
                     } else {
                         load(cloned);
@@ -115,4 +115,38 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
             return false;
         }
     }
+
+    let drag_state = null;
+
+    const editor_column = document.querySelector("#editor-column");
+    const canvas = document.querySelector("#glcanvas");
+    // const canvas_width_ratio = canvas.width / canvas.clientWidth;
+
+    document.querySelector("#dragbar").addEventListener('mousedown', ev => {
+        drag_state = {
+            mouse_pos: { x: ev.clientX, y: ev.clientY },
+        };
+    });
+
+    document.addEventListener("mouseup", _ => {
+        drag_state = null;
+    });
+
+    document.addEventListener('mousemove', ev => {
+        if (drag_state === null) return;
+
+        let x_percent = drag_state.mouse_pos.x / document.body.clientWidth * 100;
+        editor_column.style.width = `${x_percent}%`;
+        editor.resize();
+
+        let canvas_width_percent = 100 - x_percent;
+        canvas.style.width = `${canvas_width_percent}%`;
+
+        // canvas.width = canvas_width_ratio / canvas.clientWidth;
+        // let canvas_width_px = canvas_width_ratio * canvas_width_percent;
+        // console.log(canvas.width, canvas_width_px);
+        // canvas.width = canvas_width_px;
+
+        drag_state.mouse_pos = { x: ev.clientX, y: ev.clientY };
+    });
 }

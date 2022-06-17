@@ -10,7 +10,7 @@ defmodule Router do
       conn,
       command: "cargo",
       args: ["build", "--target", "wasm32-unknown-unknown", "--release"],
-      file: "target/wasm32-unknown-unknown/debug/template.wasm",
+      file: "target/wasm32-unknown-unknown/release/template.wasm",
       mime: "application/wasm"
     )
   end

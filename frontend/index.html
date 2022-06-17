@@ -64,17 +64,26 @@
         .error-msg-container-shown {
             height: 40vh;
         }
+
+        .dragbar {
+            width: 10px;
+            background: transparent;
+            cursor: col-resize;
+            margin-left: -5px;
+        }
+
+        .columns {
+            display: flex;
+        }
     </style>
     <script src="https://pagecdn.io/lib/ace/1.4.14/ace.min.js"></script>
     <script src="https://pagecdn.io/lib/ace/1.4.14/mode-rust.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-    <!-- Minified and statically hosted version of https://github.com/not-fl3/macroquad/blob/master/js/mq_js_bundle.js -->
     <div class="columns" style="height: 100vh; margin: 0">
-        <div class="column" style="padding: 0; background: white; width: 120ch">
+        <div id="editor-column" class="column" style="padding: 0; background: white; width: 50%;">
             <div style="height: 4vh">
                 <button 
                     id="compile-btn" onclick="compile_and_load()" class="compile-btn"
@@ -156,8 +165,9 @@ async fn main() {
                 </code>
             </div>
         </div>
+        <div id="dragbar" class="dragbar" style="padding: 0; margin: 0;"></div>
         <div class="column" style="padding: 0">
-            <canvas id="glcanvas" tabindex='1' style="width: 50vw"></canvas>
+            <canvas id="glcanvas" tabindex='1' style="width: 50%; margin-left: -7.5px"></canvas>
         </div>
     </div>
 
