@@ -120,7 +120,28 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 
     const editor_column = document.querySelector("#editor-column");
     const canvas = document.querySelector("#glcanvas");
-    // const canvas_width_ratio = canvas.width / canvas.clientWidth;
+
+    function toggleEditor() {
+        if (editor_column.style.display === "none") {
+            editor_column.style.display = "block";
+            canvas.style.width = "50%";
+            editor_column.style.width = "50%";
+        } else {
+            editor_column.style.display = "none";
+            canvas.style.width = "100%";
+        }
+    }
+
+    function toggleDemo() {
+        if (canvas.style.display === "none") {
+            canvas.style.display = "block";
+            canvas.style.width = "50%";
+            editor_column.style.width = "50%";
+        } else {
+            canvas.style.display = "none";
+            editor_column.style.width = "100%";
+        }
+    }
 
     document.querySelector("#dragbar").addEventListener('mousedown', ev => {
         drag_state = {

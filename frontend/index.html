@@ -75,6 +75,28 @@
         .columns {
             display: flex;
         }
+
+        .top-buttons {
+            position: absolute;
+            width: 30ch;
+            height: 1.5em;
+            left: calc(50vw - 30ch / 2);
+            z-index: 5;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .top-buttons > * {
+            padding-left: 2em;
+            padding-right: 2em;
+            z-index: 5;
+        }
+
+        .top-buttons > :hover {
+            background: black !important;
+            color: rgb(245, 158, 11) !important;
+        }
     </style>
     <script src="https://pagecdn.io/lib/ace/1.4.14/ace.min.js"></script>
     <script src="https://pagecdn.io/lib/ace/1.4.14/mode-rust.min.js"></script>
@@ -82,8 +104,16 @@
 </head>
 
 <body>
+    <div class="top-buttons">
+        <button style="background: rgb(245, 158, 11)" onclick="toggleEditor()">
+            Toggle Editor
+        </button>
+        <button style="background: rgb(31, 41, 55); color: white" onclick="toggleDemo()">
+            Toggle Demo
+        </button>
+    </div>
     <div class="columns" style="height: 100vh; margin: 0">
-        <div id="editor-column" class="column" style="padding: 0; background: white; width: 50%;">
+        <div id="editor-column" class="column" style="padding: 0; background: white; width: 50%; z-index: 1;">
             <div style="height: 4vh">
                 <button 
                     id="compile-btn" onclick="compile_and_load()" class="compile-btn"
