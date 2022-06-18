@@ -129,57 +129,29 @@
             <div id="editor-container" style="height: 92vh; transition: height 0.075s linear">
             <div id="editor" style="height: 100%">use macroquad::prelude::*;
 
-struct MainState {
-    ball: Rect,
-    ball_vel: Vec2,
-}
-
-impl MainState {
-    fn new() -> Self {
-        MainState {
-            ball: Rect::new(screen_width() / 2.0, screen_height() / 2.0, 20.0, 20.0),
-            ball_vel: Vec2::new(2.0, 1.5),
-        }
-    }
-
-    fn update(&mut self) {
-        self.ball.x += self.ball_vel.x;
-        self.ball.y += self.ball_vel.y;
-
-        if self.ball.left() <= 0.0 
-        || self.ball.right() >= screen_width() {
-            self.ball_vel.x *= -1.0;
-        }
-
-        if self.ball.top() <= 0.0
-        || self.ball.bottom() >= screen_height() {
-            self.ball_vel.y *= -1.0;
-        }
-    }
-
-    fn draw_rect(&self, rect: &Rect) {
-        draw_rectangle(
-            rect.x,
-            rect.y,
-            rect.w,
-            rect.h,
-            WHITE,
-        )
-    }
-
-    fn draw(&self) {
-        self.draw_rect(&self.ball);
-    }
-}
-
-#[macroquad::main("Pong")]
+#[macroquad::main("InputKeys")]
 async fn main() {
-    let mut main_state = MainState::new();
+    let mut x = screen_width() / 2.0;
+    let mut y = screen_height() / 2.0;
 
     loop {
-        clear_background(BLACK);
-        main_state.update();
-        main_state.draw();
+        clear_background(LIGHTGRAY);
+
+        if is_key_down(KeyCode::Right) {
+            x += 1.0;
+        }
+        if is_key_down(KeyCode::Left) {
+            x -= 1.0;
+        }
+        if is_key_down(KeyCode::Down) {
+            y += 1.0;
+        }
+        if is_key_down(KeyCode::Up) {
+            y -= 1.0;
+        }
+
+        draw_circle(x, y, 15.0, YELLOW);
+        draw_text("move the ball with arrow keys", 20.0, 100.0, 40.0, BLACK);
         next_frame().await
     }
 }
