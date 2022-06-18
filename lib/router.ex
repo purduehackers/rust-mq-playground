@@ -1,6 +1,7 @@
 defmodule Router do
   use Plug.Router
-  
+
+  plug CORSPlug, origin: [""]
   plug(IdleTimerPlug)
   plug(:match)
   plug(:dispatch)
