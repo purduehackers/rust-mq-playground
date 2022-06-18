@@ -1,7 +1,7 @@
 defmodule Router do
   use Plug.Router
 
-  plug CORSPlug, origin: [""]
+  plug Corsica, origins: ["https://macroquad.purduehackers.com", "https://rust-mq.fly.dev"]
   plug(IdleTimerPlug)
   plug(:match)
   plug(:dispatch)

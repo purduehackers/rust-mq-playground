@@ -8,7 +8,7 @@ defmodule ServerApp do
         plug: Router, 
         options: [port: 4000]
       ),
-      {IdleTimer, 120},
+      {IdleTimer, 90},
     ]
     
     System.cmd("cargo", ["build", "--target", "wasm32-unknown-unknown", "--release"], cd: "template")

@@ -26,7 +26,7 @@ defmodule RustMqApi.MixProject do
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:uuid,"~> 1.1"},
-      {:cors_plug, "~> 3.0"},
+      {:corsica, "~> 1.0"},
     ]
   end
 end
